@@ -2,8 +2,22 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
+<?import javafx.scene.web.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" />
-
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="tengu.TenguController">
+  <children>
+    <VBox fillWidth="true" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <WebView fx:id="webView" prefHeight="0.0" prefWidth="0.0" VBox.vgrow="ALWAYS" />
+        <ToolBar>
+          <items>
+            <Button id="chooseFile" fx:id="chooseDir" mnemonicParsing="false" onAction="#open" text="Open" />
+          </items>
+        </ToolBar>
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>
