@@ -9,7 +9,7 @@ class Tengu extends Application {
   @Override
   def start(primaryStage: Stage) {
     primaryStage.setTitle("Tengu")
-    primaryStage.setScene(new Scene(FXMLLoader.load(getClass.getResource("/Tengu.fxml"))))
+    primaryStage.setScene(new Scene(FXMLLoader.load(getClass.getResource("/fxml/Tengu.fxml"))))
     primaryStage.show
   }
 
