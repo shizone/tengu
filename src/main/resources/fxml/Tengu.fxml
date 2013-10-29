@@ -14,7 +14,7 @@
         <WebView fx:id="webView" prefHeight="0.0" prefWidth="0.0" VBox.vgrow="ALWAYS" />
         <ToolBar>
           <items>
-            <Button id="chooseFile" fx:id="chooseDir" mnemonicParsing="false" onAction="#open" text="Open" />
+            <Button id="chooseDir" fx:id="chooseDir" mnemonicParsing="false" onAction="#open" text="Open" />
           </items>
         </ToolBar>
       </children>
