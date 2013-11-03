@@ -7,14 +7,18 @@ import java.net.URL
 import java.util.ResourceBundle
 import javafx.scene.control.Button
 import javafx.event.ActionEvent
-import pictureshow.Server
-import unfiltered.jetty.Server
-import pictureshow.Server
+import java.nio.file.{Paths, FileSystems, Files}
+import java.io.File
+import java.nio.file.attribute.FileAttribute
 
 /**
  * Created by razon on 13/10/26.
  */
 class TenguController extends Initializable {
+
+  val prevDirSettingsDir = Paths.get(System.getProperty("user.home") + "/.tengu/")
+  val prevDirSettingsFile = Paths.get(prevDirSettingsDir + ".prevDir")
+  val encoding = "UTF-8"
 
   @FXML
   val webView: WebView = null
@@ -25,20 +29,27 @@ class TenguController extends Initializable {
   private lazy val dirChooser = new DirectoryChooser
 
   override def initialize(url: URL, rb: ResourceBundle) {
+    Files.createDirectories(prevDirSettingsDir)
+    if (!Files.exists(prevDirSettingsFile)) Files.createFile(prevDirSettingsFile)
   }
 
   private var svr: PicturShowServer = PicturShowServer(null)
 
   @FXML
   def open(e: ActionEvent):Unit = {
-    val d = dirChooser.showDialog(null)
-    if (d != null) {
-      svr.start(d.getPath).fold({ _ =>
-      }, { svr =>
-        this.svr = svr
-        webEngine.load("http://localhost:3000")
-        webView.requestFocus()
-      })
+    new String(Files.readAllBytes(prevDirSettingsFile), encoding) match {
+      case s: String if 0 < s.length => dirChooser.setInitialDirectory(new File(s))
+      case _ => {}
+    }
+    dirChooser.showDialog(null) match {
+      case d: File => svr.start(d.getPath).fold({ _ =>
+        }, { svr =>
+          Files.write(prevDirSettingsFile, d.toString.getBytes(encoding))
+          this.svr = svr
+          webEngine.load("http://localhost:3000")
+          webView.requestFocus()
+        })
+      case _ => {}
     }
   }
 }
