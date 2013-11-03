@@ -1,21 +1,26 @@
 package tengu
 
-import javafx.stage.{Stage, DirectoryChooser}
+import javafx.stage.DirectoryChooser
 import javafx.scene.web.WebView
 import javafx.fxml.{Initializable, FXML}
 import java.net.URL
 import java.util.ResourceBundle
-import javafx.scene.control.Button
+import javafx.scene.control.{ToolBar, Button}
 import javafx.event.ActionEvent
-import java.nio.file.{Paths, FileSystems, Files}
+import java.nio.file.{Paths, Files}
 import java.io.File
-import java.nio.file.attribute.FileAttribute
+import javafx.scene.input.MouseEvent
+import javafx.animation.{Timeline, KeyValue, KeyFrame}
+import javafx.util.Duration
+import javafx.beans.value.WritableValue
 
 /**
  * Created by razon on 13/10/26.
  */
 class TenguController extends Initializable {
 
+  @FXML
+  val toolBar: ToolBar = null
   @FXML
   val webView: WebView = null
   @FXML
@@ -36,6 +41,22 @@ class TenguController extends Initializable {
   }
 
   def stop = svr.stop
+
+  @FXML
+  def menuVisible(e: MouseEvent):Unit = {
+    val isDisplay = (e.getSceneY >= webView.getScene.getHeight - 60)
+    (toolBar.getTranslateY match {
+      case 0.0 => if (isDisplay) None else Some(0.0, toolBar.getHeight)
+      case _ => if (isDisplay) Some(toolBar.getHeight, 0.0) else None
+      }).foreach({height =>
+      new Timeline(
+        new KeyFrame(Duration.ZERO,
+          new KeyValue(toolBar.translateYProperty().asInstanceOf[WritableValue[Any]], height._1)),
+        new KeyFrame(Duration.millis(200),
+          new KeyValue(toolBar.translateYProperty().asInstanceOf[WritableValue[Any]], height._2))
+      ).play()
+    })
+  }
 
   @FXML
   def open(e: ActionEvent):Unit = {

@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
+<?import java.net.URL?>
 <?import java.util.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.web.*?>
 
-<?import java.net.URL?>
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="tengu.TenguController">
   <children>
     <VBox fillWidth="true" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <WebView fx:id="webView" prefHeight="0.0" prefWidth="0.0" VBox.vgrow="ALWAYS" />
-        <ToolBar>
+        <WebView fx:id="webView" onMouseMoved="#menuVisible" prefHeight="0.0" prefWidth="0.0" VBox.vgrow="ALWAYS" />
+        <ToolBar fx:id="toolBar" focusTraversable="false" maxHeight="-1.0" minHeight="-1.0" rotate="0.0" translateY="100.0" visible="true" VBox.vgrow="ALWAYS">
           <items>
-            <Button id="chooseDir" fx:id="chooseDir" mnemonicParsing="false" onAction="#open" text="Open" />
+            <Button fx:id="chooseDir" mnemonicParsing="false" onAction="#open" text="Open" />
           </items>
         </ToolBar>
       </children>
     </VBox>
   </children>
   <stylesheets>
-      <URL value="@../css/Tengu.css" />
+    <URL value="@../css/Tengu.css" />
   </stylesheets>
 </AnchorPane>
