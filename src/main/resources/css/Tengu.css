@@ -1,0 +1,11 @@
+.button {
+  -fx-background-color: #444444;
+  -fx-border-width: 0px;
+  -fx-text-fill: white;
+  -fx-label-padding: 5px;
+}
+
+.tool-bar {
+  -fx-background-color: #222222;
+  -fx-border-width: 0px;
+}
