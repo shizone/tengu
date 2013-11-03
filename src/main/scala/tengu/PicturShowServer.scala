@@ -1,6 +1,5 @@
 package tengu
 
-import unfiltered.jetty.Server
 import pictureshow.Server
 import unfiltered.jetty.Server
 
@@ -13,8 +12,10 @@ case class PicturShowServer(svr: Server) {
     println(err)
     Left()
   }, { svr =>
-    if (this.svr != null) this.svr.stop()
-    svr.start()
+    if (this.svr != null) this.svr.stop
+    svr.start
     Right(PicturShowServer(svr))
   })
+
+  def stop = if (this.svr != null) this.svr.stop
 }

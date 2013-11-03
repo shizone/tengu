@@ -12,6 +12,7 @@ object Tengu extends Build {
       organization := "razon",
       scalaVersion := "2.9.2",
       resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
+      fork in run := true,
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "1.9.1",
         "com.typesafe.akka" % "akka-actor" % "2.0.1"

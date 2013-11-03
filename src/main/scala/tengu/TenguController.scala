@@ -1,6 +1,6 @@
 package tengu
 
-import javafx.stage.DirectoryChooser
+import javafx.stage.{Stage, DirectoryChooser}
 import javafx.scene.web.WebView
 import javafx.fxml.{Initializable, FXML}
 import java.net.URL
@@ -35,6 +35,8 @@ class TenguController extends Initializable {
     if (!Files.exists(prevDirSettingsFile)) Files.createFile(prevDirSettingsFile)
   }
 
+  def stop = svr.stop
+
   @FXML
   def open(e: ActionEvent):Unit = {
     new String(Files.readAllBytes(prevDirSettingsFile), encoding) match {
@@ -47,7 +49,7 @@ class TenguController extends Initializable {
           Files.write(prevDirSettingsFile, d.toString.getBytes(encoding))
           this.svr = svr
           webEngine.load("http://localhost:3000")
-          webView.requestFocus()
+          webView.requestFocus
         })
       case _ => {}
     }
