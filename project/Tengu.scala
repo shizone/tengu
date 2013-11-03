@@ -11,12 +11,16 @@ object Tengu extends Build {
       name := "Tengu",
       organization := "razon",
       scalaVersion := "2.9.2",
+      resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
       libraryDependencies ++= Seq(
-        "org.scalatest" %% "scalatest" % "1.9.1"
+        "org.scalatest" %% "scalatest" % "1.9.1",
+        "com.typesafe.akka" % "akka-actor" % "2.0.1"
       ),
       initialCommands := "import tengu._"
     )
   )
+
+
 
   lazy val picture_show =
     Seq(

@@ -8,6 +8,8 @@ import java.util.ResourceBundle
 import javafx.scene.control.Button
 import javafx.event.ActionEvent
 import pictureshow.Server
+import unfiltered.jetty.Server
+import pictureshow.Server
 
 /**
  * Created by razon on 13/10/26.
@@ -19,19 +21,24 @@ class TenguController extends Initializable {
   @FXML
   val chooseDir: Button = null
 
-  lazy val webEngine = webView.getEngine
-  lazy val dirChooser = new DirectoryChooser
+  private lazy val webEngine = webView.getEngine
+  private lazy val dirChooser = new DirectoryChooser
 
-  @Override
-  def initialize(url: URL, rb: ResourceBundle) {
+  override def initialize(url: URL, rb: ResourceBundle) {
   }
+
+  private var svr: PicturShowServer = PicturShowServer(null)
 
   @FXML
   def open(e: ActionEvent):Unit = {
     val d = dirChooser.showDialog(null)
     if (d != null) {
-      Server.main(Array("-s=" + d.getPath))
-      webEngine.load("http://localhost:3000")
+      svr.start(d.getPath).fold({ _ =>
+      }, { svr =>
+        this.svr = svr
+        webEngine.load("http://localhost:3000")
+        webView.requestFocus()
+      })
     }
   }
 }
