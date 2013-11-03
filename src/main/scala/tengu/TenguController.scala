@@ -16,10 +16,6 @@ import java.nio.file.attribute.FileAttribute
  */
 class TenguController extends Initializable {
 
-  val prevDirSettingsDir = Paths.get(System.getProperty("user.home") + "/.tengu/")
-  val prevDirSettingsFile = Paths.get(prevDirSettingsDir + ".prevDir")
-  val encoding = "UTF-8"
-
   @FXML
   val webView: WebView = null
   @FXML
@@ -28,12 +24,16 @@ class TenguController extends Initializable {
   private lazy val webEngine = webView.getEngine
   private lazy val dirChooser = new DirectoryChooser
 
+  private val prevDirSettingsDir = Paths.get(System.getProperty("user.home") + "/.tengu/")
+  private val prevDirSettingsFile = Paths.get(prevDirSettingsDir + ".prevDir")
+  private val encoding = "UTF-8"
+
+  private var svr: PicturShowServer = PicturShowServer(null)
+
   override def initialize(url: URL, rb: ResourceBundle) {
     Files.createDirectories(prevDirSettingsDir)
     if (!Files.exists(prevDirSettingsFile)) Files.createFile(prevDirSettingsFile)
   }
-
-  private var svr: PicturShowServer = PicturShowServer(null)
 
   @FXML
   def open(e: ActionEvent):Unit = {
