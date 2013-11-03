@@ -7,6 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.web.*?>
 
+<?import java.net.URL?>
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="tengu.TenguController">
   <children>
     <VBox fillWidth="true" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -20,4 +21,7 @@
       </children>
     </VBox>
   </children>
+  <stylesheets>
+      <URL value="@../css/Tengu.css" />
+  </stylesheets>
 </AnchorPane>
