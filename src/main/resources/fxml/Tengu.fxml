@@ -4,25 +4,22 @@
 <?import java.net.*?>
 <?import java.net.URL?>
 <?import java.util.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.web.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="tengu.TenguController">
+<StackPane id="StackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="tengu.TenguController">
   <children>
-    <VBox fillWidth="true" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <children>
-        <WebView fx:id="webView" onMouseMoved="#menuVisible" prefHeight="0.0" prefWidth="0.0" VBox.vgrow="ALWAYS" />
-        <ToolBar fx:id="toolBar" focusTraversable="false" maxHeight="-1.0" minHeight="-1.0" rotate="0.0" translateY="100.0" visible="true" VBox.vgrow="ALWAYS">
-          <items>
-            <Button fx:id="chooseDir" mnemonicParsing="false" onAction="#open" text="Open" />
-          </items>
-        </ToolBar>
-      </children>
-    </VBox>
+    <WebView fx:id="webView" onMouseMoved="#menuVisible" prefHeight="-1.0" prefWidth="-1.0" />
+    <ToolBar fx:id="toolBar" focusTraversable="false" maxHeight="-1.0" minHeight="-1.0" orientation="VERTICAL" rotate="0.0" translateX="100.0" translateY="0.0" visible="true" StackPane.alignment="CENTER_RIGHT">
+      <items>
+        <Button fx:id="chooseDir" mnemonicParsing="false" onAction="#open" text="Open" />
+      </items>
+    </ToolBar>
   </children>
   <stylesheets>
     <URL value="@../css/Tengu.css" />
   </stylesheets>
-</AnchorPane>
+</StackPane>

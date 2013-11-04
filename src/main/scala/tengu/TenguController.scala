@@ -44,17 +44,15 @@ class TenguController extends Initializable {
 
   @FXML
   def menuVisible(e: MouseEvent):Unit = {
-    val isDisplay = (e.getSceneY >= webView.getScene.getHeight - 60)
-    (toolBar.getTranslateY match {
-      case 0.0 => if (isDisplay) None else Some(0.0, toolBar.getHeight)
-      case _ => if (isDisplay) Some(toolBar.getHeight, 0.0) else None
-      }).foreach({height =>
+    val isDisplay = (e.getSceneX >= webView.getScene.getWidth - 100)
+    (toolBar.getTranslateX match {
+      case 0.0 => if (isDisplay) None else Some(0.0, toolBar.getWidth)
+      case _ => if (isDisplay) Some(toolBar.getWidth, 0.0) else None
+      }).foreach({width =>
       new Timeline(
-        new KeyFrame(Duration.ZERO,
-          new KeyValue(toolBar.translateYProperty().asInstanceOf[WritableValue[Any]], height._1)),
-        new KeyFrame(Duration.millis(200),
-          new KeyValue(toolBar.translateYProperty().asInstanceOf[WritableValue[Any]], height._2))
-      ).play()
+        new KeyFrame(Duration.ZERO, new KeyValue(toolBar.translateXProperty().asInstanceOf[WritableValue[Any]], width._1)),
+        new KeyFrame(Duration.millis(200), new KeyValue(toolBar.translateXProperty().asInstanceOf[WritableValue[Any]], width._2))
+      ).play
     })
   }
 
@@ -65,8 +63,9 @@ class TenguController extends Initializable {
       case _ => {}
     }
     dirChooser.showDialog(null) match {
-      case d: File => svr.start(d.getPath).fold({ _ =>
-        }, { svr =>
+      case d: File => svr.start(d.getPath).fold(
+      { _ =>  },
+      { svr =>
           Files.write(prevDirSettingsFile, d.toString.getBytes(encoding))
           this.svr = svr
           webEngine.load("http://localhost:3000")
