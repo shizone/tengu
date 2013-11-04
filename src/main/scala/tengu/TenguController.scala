@@ -83,7 +83,7 @@ class TenguController extends Initializable {
   @FXML
   def webClick(e: MouseEvent) {updateNote}
   @FXML
-  def webKeyType(e: KeyEvent):Unit = {updateNote}
+  def webKeyPress(e: KeyEvent):Unit = {updateNote}
 
   @FXML
   def note(e: ActionEvent) = {
