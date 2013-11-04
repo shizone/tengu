@@ -14,7 +14,12 @@ class Tengu extends Application {
     primaryStage.setScene(new Scene(loader.load().asInstanceOf[Parent]))
     primaryStage.show
     primaryStage.setOnCloseRequest(new EventHandler[WindowEvent] {
-      def handle(p1: WindowEvent) = loader.getController.asInstanceOf[TenguController].stop
+      def handle(p1: WindowEvent) = {
+        val primaryController = loader.getController.asInstanceOf[TenguController]
+        val noteStage = primaryController.noteStage
+        if (noteStage != null) noteStage.close
+        primaryController.stop
+      }
     })
   }
 
