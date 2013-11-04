@@ -31,13 +31,13 @@ class TenguController extends Initializable {
 
   private lazy val webEngine = webView.getEngine
   private lazy val dirChooser = new DirectoryChooser
-  private lazy val noteLoader = new FXMLLoader(getClass.getResource("/fxml/Note.fxml"))
 
   private val prevDirSettingsDir = Paths.get(System.getProperty("user.home") + "/.tengu/")
   private val prevDirSettingsFile = Paths.get(prevDirSettingsDir + ".prevDir")
   private val encoding = "UTF-8"
 
   private var svr: PicturShowServer = PicturShowServer(null)
+  var noteLoader: FXMLLoader = null
   var noteStage: Stage = null
 
   override def initialize(url: URL, rb: ResourceBundle) {
@@ -88,6 +88,7 @@ class TenguController extends Initializable {
   @FXML
   def note(e: ActionEvent) = {
     if (noteStage == null && svr.svr != null) {
+      noteLoader = new FXMLLoader(getClass.getResource("/fxml/Note.fxml"))
       noteStage = new Stage
       noteStage.setTitle("Note")
       noteStage.setResizable(false)
@@ -98,6 +99,7 @@ class TenguController extends Initializable {
         def handle(p1: WindowEvent) {
           noteStage.close
           noteStage = null
+          noteLoader = null
         }
       })
       updateNote
