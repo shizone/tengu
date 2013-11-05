@@ -116,9 +116,12 @@ class TenguController extends Initializable {
               case s: String if s.head == '#' => s.tail.mkString
               case _ => "0"
             }
-            val bodyHTML = webEngine.executeScript("document.getElementById('slide-"+ id +"').innerHTML").toString
+            val comment = webEngine.executeScript(
+              "document.getElementById('slide-"+ id +"').innerHTML.match(/<!--.*?-->/g)" +
+              ".reduce(function(previousValue, currentValue, index, array){return previousValue + \"\\n\" + currentValue})")
+              .toString.replaceAll("<!--", "").replaceAll("-->", "")
             val noteController = noteLoader.getController[NoteController]
-            noteController.note.setText(bodyHTML)
+            noteController.note.setText(comment)
             noteController.image.setImage(webView.getScene.snapshot(null))
             noteController.image.setFitWidth(noteController.image.getScene.getWidth)
             noteController.image.setFitHeight(noteController.image.getScene.getHeight)
