@@ -117,11 +117,11 @@ class TenguController extends Initializable {
               case _ => "0"
             }
             val comment = webEngine.executeScript(
-              "document.getElementById('slide-"+ id +"').innerHTML.match(/<!--.*?-->/g)" +
-              ".reduce(function(previousValue, currentValue, index, array){return previousValue + \"\\n\" + currentValue})")
+              "var comments = document.getElementById('slide-"+ id +"').innerHTML.match(/<!--[\\s\\S]*?-->/g);" +
+              "comments != null ? comments.reduce(function(previousValue, currentValue, index, array){return previousValue + \"\\n\" + currentValue}) : '';")
               .toString.replaceAll("<!--", "").replaceAll("-->", "")
             val noteController = noteLoader.getController[NoteController]
-            noteController.note.setText(comment)
+            noteController.note.setText(id + "\n" + comment)
             noteController.image.setImage(webView.getScene.snapshot(null))
             noteController.image.setFitWidth(noteController.image.getScene.getWidth)
             noteController.image.setFitHeight(noteController.image.getScene.getHeight)

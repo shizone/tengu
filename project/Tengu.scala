@@ -6,7 +6,7 @@ object Tengu extends Build {
   lazy val root = Project(
     id = "Tengu",
     base = file("."),
-    dependencies = picture_show,
+      dependencies = picture_show,
     settings = Project.defaultSettings ++ Seq(
       name := "Tengu",
       organization := "razon",
@@ -20,8 +20,6 @@ object Tengu extends Build {
       initialCommands := "import tengu._"
     )
   )
-
-
 
   lazy val picture_show =
     Seq(
