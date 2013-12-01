@@ -18,7 +18,6 @@ class Tengu extends Application {
         val primaryController = loader.getController.asInstanceOf[TenguController]
         val noteStage = primaryController.noteStage
         if (noteStage != null) noteStage.close
-        primaryController.stop
       }
     })
   }

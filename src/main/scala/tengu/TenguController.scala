@@ -1,21 +1,19 @@
 package tengu
 
-import javafx.stage.{WindowEvent, Stage, DirectoryChooser}
-import javafx.scene.web.WebView
+import javafx.stage.{FileChooser, WindowEvent, Stage, DirectoryChooser}
+import javafx.scene.web.{WebEngine, WebView}
 import javafx.fxml.{FXMLLoader, Initializable, FXML}
 import java.net.URL
 import java.util.ResourceBundle
 import javafx.scene.control.{ToolBar, Button}
 import javafx.event.{EventHandler, ActionEvent}
 import java.nio.file.{Paths, Files}
-import java.io.{StringWriter, StringReader, File}
+import java.io.File
 import javafx.scene.input.{KeyEvent, MouseEvent}
 import javafx.animation.{Timeline, KeyValue, KeyFrame}
 import javafx.util.Duration
-import javafx.beans.value.{ChangeListener, ObservableValue, WritableValue}
+import javafx.beans.value.WritableValue
 import javafx.scene.{SnapshotParameters, Parent, Scene}
-import javafx.concurrent.Worker.State
-import javax.swing.text.html.{HTMLEditorKit, HTMLDocument}
 
 /**
  * Created by razon on 13/10/26.
@@ -30,13 +28,12 @@ class TenguController extends Initializable {
   val chooseDir: Button = null
 
   private lazy val webEngine = webView.getEngine
-  private lazy val dirChooser = new DirectoryChooser
+  private lazy val fileChooser = new FileChooser
 
   private val prevDirSettingsDir = Paths.get(System.getProperty("user.home") + "/.tengu/")
   private val prevDirSettingsFile = Paths.get(prevDirSettingsDir + ".prevDir")
   private val encoding = "UTF-8"
 
-  private var svr: PicturShowServer = PicturShowServer(null)
   var noteLoader: FXMLLoader = null
   var noteStage: Stage = null
 
@@ -44,8 +41,6 @@ class TenguController extends Initializable {
     Files.createDirectories(prevDirSettingsDir)
     if (!Files.exists(prevDirSettingsFile)) Files.createFile(prevDirSettingsFile)
   }
-
-  def stop = svr.stop
 
   @FXML
   def menuVisible(e: MouseEvent) {
@@ -64,20 +59,19 @@ class TenguController extends Initializable {
   @FXML
   def open(e: ActionEvent) {
     new String(Files.readAllBytes(prevDirSettingsFile), encoding) match {
-      case s: String if 0 < s.length => dirChooser.setInitialDirectory(new File(s))
+      case s: String if 0 < s.length => fileChooser.setInitialDirectory(new File(s))
       case _ => {}
     }
-    dirChooser.showDialog(null) match {
-      case d: File => svr.start(d.getPath).fold(
-      { _ =>  },
-      { svr =>
-          Files.write(prevDirSettingsFile, d.toString.getBytes(encoding))
-          this.svr = svr
-          webEngine.load("http://localhost:3000")
-          webView.requestFocus
-        })
+
+    fileChooser.showOpenDialog(null) match {
+      case f: File => {
+        Files.write(prevDirSettingsFile, f.getParent.getBytes(encoding))
+        webEngine.load(f.toURI.toURL.toString)
+        webView.requestFocus
+      }
       case _ => {}
     }
+
   }
 
   @FXML
@@ -87,7 +81,7 @@ class TenguController extends Initializable {
 
   @FXML
   def note(e: ActionEvent) = {
-    if (noteStage == null && svr.svr != null) {
+    if (noteStage == null && !webEngine.getLocation.isEmpty) {
       noteLoader = new FXMLLoader(getClass.getResource("/fxml/Note.fxml"))
       noteStage = new Stage
       noteStage.setTitle("Note")
@@ -108,16 +102,16 @@ class TenguController extends Initializable {
   }
 
   private def updateNote {
-    if (noteStage != null && svr.svr != null) {
+    if (noteStage != null && !webEngine.getLocation.isEmpty) {
       new Timeline(
-        new KeyFrame(Duration.millis(500), new EventHandler[ActionEvent]() {
+        new KeyFrame(Duration.millis(1000), new EventHandler[ActionEvent]() {
           override def handle(e: ActionEvent) {
-            val id = webEngine.executeScript("location.hash").toString match {
-              case s: String if s.head == '#' => s.tail.mkString
+            val id = webEngine.executeScript("url=location.href;url.substring(url.indexOf('#') + 2);").toString match {
+              case s: String if s.length != 0 => s
               case _ => "0"
             }
             val comment = webEngine.executeScript(
-              "var comments = document.getElementById('slide-"+ id +"').innerHTML.match(/<!--[\\s\\S]*?-->/g);" +
+              "var comments = Array.prototype.slice.call(document.getElementsByClassName('slides')[0].childNodes).filter(function(node){return node.nodeName == 'SECTION'})["+ id +"].innerHTML.match(/<!--[\\s\\S]*?-->/g);" +
               "comments != null ? comments.reduce(function(previousValue, currentValue, index, array){return previousValue + \"\\n\" + currentValue}) : '';")
               .toString.replaceAll("<!--", "").replaceAll("-->", "")
             val noteController = noteLoader.getController[NoteController]
@@ -128,7 +122,6 @@ class TenguController extends Initializable {
           }
         })
       ).play
-
     }
   }
 }
