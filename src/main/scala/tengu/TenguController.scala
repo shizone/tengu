@@ -122,7 +122,7 @@ class TenguController extends Initializable {
               .toString.replaceAll("<!--", "").replaceAll("-->", "")
             val noteController = noteLoader.getController[NoteController]
             noteController.note.setText(id + "\n" + comment)
-            noteController.image.setImage(webView.getScene.snapshot(null))
+            noteController.image.setImage(webView.snapshot(new SnapshotParameters, null))
             noteController.image.setFitWidth(noteController.image.getScene.getWidth)
             noteController.image.setFitHeight(noteController.image.getScene.getHeight)
           }
