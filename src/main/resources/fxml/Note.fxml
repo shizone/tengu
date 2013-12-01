@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="tengu.NoteController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="480.0" xmlns:fx="http://javafx.com/fxml" fx:controller="tengu.NoteController">
   <children>
     <VBox prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
@@ -15,7 +16,7 @@
             <Insets />
           </VBox.margin>
         </ImageView>
-        <TextArea fx:id="note" editable="false" prefHeight="-1.0" prefWidth="-1.0" wrapText="true" />
+        <TextArea fx:id="note" editable="false" prefHeight="320.0" prefWidth="-1.0" wrapText="true" />
       </children>
     </VBox>
   </children>
