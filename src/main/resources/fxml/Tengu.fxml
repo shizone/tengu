@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.*?>
 
-<StackPane id="StackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="tengu.TenguController">
+<StackPane id="StackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="tengu.controller.TenguController">
   <children>
-    <WebView fx:id="webView" onKeyPressed="#webKeyPress" onMouseClicked="#webClick" onMouseMoved="#menuVisible" prefHeight="-1.0" prefWidth="-1.0" />
-    <ToolBar fx:id="toolBar" focusTraversable="false" maxHeight="-1.0" minHeight="-1.0" orientation="VERTICAL" rotate="0.0" translateX="100.0" translateY="0.0" visible="true" StackPane.alignment="CENTER_RIGHT">
+    <WebView id="webView" onKeyPressed="#webKeyPress" onMouseClicked="#webClick" onMouseMoved="#menuVisible" prefHeight="-1.0" prefWidth="-1.0" />
+    <ToolBar id="toolBar" focusTraversable="false" maxHeight="-1.0" minHeight="-1.0" orientation="VERTICAL" rotate="0.0" translateX="100.0" translateY="0.0" visible="true" StackPane.alignment="CENTER_RIGHT">
       <items>
-        <Button fx:id="chooseDir" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#open" text="Open" />
+        <Button id="chooseDir" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#open" text="Open" />
         <Button id="note" maxHeight="-1.0" maxWidth="1.7976931348623157E308" minHeight="-1.0" mnemonicParsing="false" onAction="#note" text="Note" />
       </items>
       <StackPane.margin>

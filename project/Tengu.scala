@@ -9,7 +9,7 @@ object Tengu extends Build {
     settings = Project.defaultSettings ++ Seq(
       name := "Tengu",
       organization := "razon",
-      scalaVersion := "2.10.2",
+      scalaVersion := "2.10.3",
       resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
       fork in run := true,
       libraryDependencies ++= Seq(

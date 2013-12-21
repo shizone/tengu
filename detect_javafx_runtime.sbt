@@ -14,12 +14,26 @@ javaHome := {
   Some(dir)  // 'sbt' 'javaHome' value is ': Option[java.io.File]'
 }
 
-unmanagedJars in Compile <+= javaHome map { jh /*: Option[File]*/ =>
+unmanagedJars in Compile <++= javaHome map { jh /*: Option[File]*/ =>
   val dir: File = jh.getOrElse(null)    // unSome
   //
-  val jfxJar = new File(dir, "/jre/lib/jfxrt.jar")
-  if (!jfxJar.exists) {
-    throw new RuntimeException( "JavaFX not detected (needs Java runtime 7u06 or later): "+ jfxJar.getPath )  // '.getPath' = full filename
+  val jfxJars = new File(dir, "/jre/lib/jfxrt.jar") match {
+    case f: File if f.exists => Seq(f) // Java7
+    case f: File if !f.exists => {
+      new File(dir, "/jre/lib/ext/jfxrt.jar") match {
+         case f: File if f.exists => {
+           // Java8
+           Seq(f,
+               new File(dir, "/jre/lib/ext/nashorn.jar"),
+               new File(dir, "/jre/lib/ext/cldrdata.jar"),
+               new File(dir, "/jre/lib/jfxswt.jar"))
+         }
+        case f: File if !f.exists => {
+          throw new RuntimeException( "JavaFX not detected (needs Java runtime 7u06 or later): "+ f.getPath )  // '.getPath' = full filename
+        }
+      }
+    }
   }
-  Attributed.blank(jfxJar)
+  //
+  jfxJars.map(Attributed.blank(_))
 }

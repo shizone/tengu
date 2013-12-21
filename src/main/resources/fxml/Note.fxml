@@ -7,16 +7,16 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="480.0" xmlns:fx="http://javafx.com/fxml" fx:controller="tengu.NoteController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="480.0" xmlns:fx="http://javafx.com/fxml" fx:controller="tengu.controller.NoteController">
   <children>
     <VBox prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <ImageView fx:id="image" fitHeight="-1.0" fitWidth="-1.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+        <ImageView id="image" fitHeight="-1.0" fitWidth="-1.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
           <VBox.margin>
             <Insets />
           </VBox.margin>
         </ImageView>
-        <TextArea fx:id="note" editable="false" prefHeight="320.0" prefWidth="-1.0" wrapText="true" />
+        <TextArea id="note" editable="false" prefHeight="320.0" prefWidth="-1.0" wrapText="true" />
       </children>
     </VBox>
   </children>

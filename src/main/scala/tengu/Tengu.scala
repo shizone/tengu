@@ -5,13 +5,16 @@ import javafx.fxml.FXMLLoader
 import javafx.scene.{Parent, Scene}
 import javafx.stage.{WindowEvent, Stage}
 import javafx.event.EventHandler
+import tengu.controller.TenguController
 
 class Tengu extends Application {
 
   override def start(primaryStage: Stage) {
     val loader = new FXMLLoader(getClass.getResource("/fxml/Tengu.fxml"))
+    val scene = new Scene(loader.load().asInstanceOf[Parent])
+    loader.getController[TenguController].scene = scene
     primaryStage.setTitle("Tengu")
-    primaryStage.setScene(new Scene(loader.load().asInstanceOf[Parent]))
+    primaryStage.setScene(scene)
     primaryStage.show
     primaryStage.setOnCloseRequest(new EventHandler[WindowEvent] {
       def handle(p1: WindowEvent) = {

@@ -1,4 +1,4 @@
-package tengu
+package tengu.controller
 
 import javafx.stage.{FileChooser, WindowEvent, Stage, DirectoryChooser}
 import javafx.scene.web.{WebEngine, WebView}
@@ -14,18 +14,19 @@ import javafx.animation.{Timeline, KeyValue, KeyFrame}
 import javafx.util.Duration
 import javafx.beans.value.WritableValue
 import javafx.scene.{SnapshotParameters, Parent, Scene}
+import tengu.helper.ControllerHelper
+import ControllerHelper._
 
 /**
  * Created by razon on 13/10/26.
  */
 class TenguController extends Initializable {
 
-  @FXML
-  val toolBar: ToolBar = null
-  @FXML
-  val webView: WebView = null
-  @FXML
-  val chooseDir: Button = null
+  implicit var scene: Scene = null
+
+  lazy val toolBar = lookup[ToolBar]("toolBar")
+  lazy val webView = lookup[WebView]("webView")
+  lazy val chooseDir = lookup[Button]("chooseDir")
 
   private lazy val webEngine = webView.getEngine
   private lazy val fileChooser = new FileChooser
@@ -77,17 +78,19 @@ class TenguController extends Initializable {
   @FXML
   def webClick(e: MouseEvent) {updateNote}
   @FXML
-  def webKeyPress(e: KeyEvent):Unit = {updateNote}
+  def webKeyPress(e: KeyEvent) {updateNote}
 
   @FXML
   def note(e: ActionEvent) = {
     if (noteStage == null && !webEngine.getLocation.isEmpty) {
       noteLoader = new FXMLLoader(getClass.getResource("/fxml/Note.fxml"))
+      val scene = new Scene(noteLoader.load().asInstanceOf[Parent])
+      noteLoader.getController[NoteController].scene = scene
       noteStage = new Stage
       noteStage.setTitle("Note")
       noteStage.setResizable(false)
       noteStage.setFullScreen(false)
-      noteStage.setScene(new Scene(noteLoader.load().asInstanceOf[Parent]))
+      noteStage.setScene(scene)
       noteStage.show
       noteStage.setOnCloseRequest(new EventHandler[WindowEvent] {
         def handle(p1: WindowEvent) {
