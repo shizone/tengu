@@ -14,7 +14,9 @@ object Tengu extends Build {
       fork in run := true,
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "1.9.1",
-        "com.typesafe.akka" % "akka-actor" % "2.0.1"
+        "com.typesafe.akka" % "akka-actor" % "2.0.1",
+        "org.controlsfx" % "controlsfx" % "8.0.6",
+        "de.jensd" % "fontawesomefx" % "8.0.8"
       ),
       initialCommands := "import tengu._"
     )
