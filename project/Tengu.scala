@@ -9,14 +9,13 @@ object Tengu extends Build {
     settings = Project.defaultSettings ++ Seq(
       name := "Tengu",
       organization := "razon",
-      scalaVersion := "2.10.3",
+      scalaVersion := "2.11.1",
       resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
       fork in run := true,
       libraryDependencies ++= Seq(
-        "org.scalatest" %% "scalatest" % "1.9.1",
+        "org.scalatest" % "scalatest_2.11" % "2.2.0" % "test",
         "com.typesafe.akka" % "akka-actor" % "2.0.1",
-        "org.controlsfx" % "controlsfx" % "8.0.6",
-        "de.jensd" % "fontawesomefx" % "8.0.8"
+        "org.controlsfx" % "controlsfx" % "8.0.6"
       ),
       initialCommands := "import tengu._"
     )

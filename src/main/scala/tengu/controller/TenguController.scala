@@ -114,9 +114,44 @@ class TenguController extends Initializable {
               case _ => "0"
             }
             val comment = webEngine.executeScript(
-              "var comments = Array.prototype.slice.call(document.getElementsByClassName('slides')[0].childNodes).filter(function(node){return node.nodeName == 'SECTION'})["+ id +"].innerHTML.match(/<!--[\\s\\S]*?-->/g);" +
-              "comments != null ? comments.reduce(function(previousValue, currentValue, index, array){return previousValue + \"\\n\" + currentValue}) : '';")
-              .toString.replaceAll("<!--", "").replaceAll("-->", "")
+              s"""
+              var id = "$id";
+              var notes = null;
+              if (0 < id.indexOf("/")) {
+                var ids = id.split("/");
+                var parent_id = ids[0];
+                var child_id = ids[1];
+                var child = document.getElementById(child_id);
+                if (child == null) {
+                  var parent = document.getElementById(parent_id);
+                  if (parent == null) {
+                    parent = document.querySelectorAll(".slides section")[parent_id];
+                  }
+                  child = parent.querySelectorAll("section")[child_id];
+                }
+                notes = child.querySelectorAll("aside.notes")
+              } else {
+                var section = document.getElementById(id);
+                if (section == null) {
+                  section = document.querySelectorAll(".slides section")[id];
+                }
+                if (section.querySelector("section") != null) {
+                  notes = section.querySelector("section").querySelectorAll("aside.notes");
+                } else {
+                  notes = section.querySelectorAll("aside.notes");
+                }
+              }
+              var comment = "";
+              if (notes != null) {
+                for (i = 0; i < notes.length; i++){
+                  if (comment != "") {
+                    comment += "\\n";
+                  }
+                  comment += notes.item(i).innerHTML;
+                }
+              }
+              comment;
+             """)
             val noteController = noteLoader.getController[NoteController]
             noteController.note.setText(id + "\n" + comment)
             noteController.image.setImage(webView.snapshot(new SnapshotParameters, null))

@@ -4,7 +4,7 @@ import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.scene.{Parent, Scene}
 import javafx.stage.{WindowEvent, Stage}
-import javafx.event.EventHandler
+import javafx.event.{ActionEvent, EventHandler}
 import tengu.controller.TenguController
 
 class Tengu extends Application {
@@ -28,6 +28,7 @@ class Tengu extends Application {
   def launch(args: Array[String]) {
     Application.launch(args: _*)
   }
+
 }
 
 object Tengu {
@@ -35,4 +36,3 @@ object Tengu {
     new Tengu launch args
   }
 }
-
